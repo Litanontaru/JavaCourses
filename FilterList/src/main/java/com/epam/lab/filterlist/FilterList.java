@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class FilterList implements Iterable<Integer> {
     private int[] list;
-    private int[] predicate;
+    private final int[] predicate;
     private int size;
 
     public FilterList(int[] elements, int[] predicate) {
@@ -24,8 +24,30 @@ public class FilterList implements Iterable<Integer> {
         return false;
     }
 
-    public int getSize() {
-        return size;
+
+    /**
+     * Method returns size of list which doesn't include elements from predicate
+     * @return size without predicate elements
+     */
+    public int getSizeWithoutPredicateElems() {
+        int count = 0;
+        for (int element : list) {
+            if (!isElementInPredicate(element))
+                count++;
+        }
+        return count;
+    }
+
+    public boolean add(int elem) {
+        if (!isElementInPredicate(elem)) {
+            if (size == list.length) {
+                this.list = Arrays.copyOf(list, list.length + list.length / 2 + 1);
+            }
+            this.list[size] = elem;
+            size++;
+            return true;
+        }
+        return false;
     }
 
     public Iterator<Integer> iterator() {
@@ -59,8 +81,9 @@ public class FilterList implements Iterable<Integer> {
                 for (int i = currentIndex; i < size; i++) {
                     list[i] = list[i + 1];
                 }
+            } else {
+                throw new IllegalStateException();
             }
-            throw new IllegalStateException();
         }
     }
 }
