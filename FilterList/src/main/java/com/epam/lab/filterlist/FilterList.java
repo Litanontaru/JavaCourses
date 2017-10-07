@@ -5,71 +5,105 @@ import java.util.*;
 /**
  * Created by Kate on 02.10.2017.
  */
-public class FilterList implements Iterable<Integer> {
-    private int[] list;
-    private final int[] predicate;
+public class FilterList<T> implements Iterable<T> {
+    private ListNode<T> head;
+    private final Set<T> predicate;
     private int size;
 
-    public FilterList(int[] elements, int[] predicate) {
-        this.list = elements;
-        this.predicate = predicate;
-        this.size = this.list.length;
-    }
+    private class ListNode<T> {
+        T value;
+        ListNode<T> next;
+        ListNode<T> prev;
 
-    private boolean isElementInPredicate(int elem) {
-        for (int elemPredicate : predicate) {
-            if (elemPredicate == elem)
-                return true;
+        ListNode(T value, ListNode<T> prev, ListNode<T> next) {
+            this.value = value;
+            this.prev = prev;
+            this.next = next;
         }
-        return false;
+
+        ListNode(T value) {
+            this.value = value;
+            this.prev = null;
+            this.next = null;
+        }
     }
 
+    public FilterList(Collection<T> elements, Collection<T> predicate) {
+        for (T element : elements) {
+            addListNode(new ListNode<>(element));
+        }
+
+        this.predicate = new HashSet<>(predicate);
+        this.size = elements.size();
+    }
+
+    public FilterList(T[] elements, T[] predicate) {
+        this(Arrays.asList(elements), Arrays.asList(predicate));
+    }
+
+    private void addListNode(ListNode<T> node) {
+        if (head == null) {
+            head = node;
+            head.next = head;
+            head.prev = head;
+        }
+        node.prev = head.prev;
+        node.next = head;
+        head.prev.next = node;
+        head.prev = node;
+        size++;
+    }
+
+    private boolean isElementInPredicate(T element) {
+        return predicate.contains(element);
+    }
 
     /**
      * Method returns size of list which doesn't include elements from predicate
+     *
      * @return size without predicate elements
      */
     public int getSizeWithoutPredicateElems() {
         int count = 0;
-        for (int element : list) {
+        for (T element : this) {
             if (!isElementInPredicate(element))
                 count++;
         }
         return count;
     }
 
-    public boolean add(int elem) {
+    public boolean add(T elem) {
         if (!isElementInPredicate(elem)) {
-            if (size == list.length) {
-                this.list = Arrays.copyOf(list, list.length + list.length / 2 + 1);
-            }
-            this.list[size] = elem;
-            size++;
+            addListNode(new ListNode<>(elem));
             return true;
         }
         return false;
     }
 
-    public Iterator<Integer> iterator() {
+    public Iterator<T> iterator() {
         return new FilterIterator();
     }
 
-    private class FilterIterator implements Iterator<Integer> {
+    private class FilterIterator implements Iterator<T> {
+        ListNode<T> curElement = head;
         int currentIndex;
 
         @Override
         public boolean hasNext() {
-            while (currentIndex < size && isElementInPredicate(list[currentIndex]))
+            while (currentIndex < size && isElementInPredicate(curElement.value)) {
                 currentIndex++;
+                curElement = curElement.next;
+            }
             return currentIndex < size;
         }
 
         @Override
-        public Integer next() {
-            int i = currentIndex;
+        public T next() {
             if (hasNext()) {
+                T value = curElement.value;
                 currentIndex++;
-                return list[i];
+                curElement = curElement.next;
+                return value;
             }
             throw new NoSuchElementException();
         }
@@ -77,10 +111,11 @@ public class FilterList implements Iterable<Integer> {
         @Override
         public void remove() {
             if (hasNext()) {
+                if(curElement == head) head = curElement.next;
+                curElement.prev.next = curElement.next;
+                curElement.next.prev = curElement.prev;
+                curElement = curElement.next;
                 size--;
-                for (int i = currentIndex; i < size; i++) {
-                    list[i] = list[i + 1];
-                }
             } else {
                 throw new IllegalStateException();
             }
