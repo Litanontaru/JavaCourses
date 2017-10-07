@@ -6,20 +6,14 @@ import java.util.*;
  * Created by Kate on 02.10.2017.
  */
 public class FilterList<T> implements Iterable<T> {
-    private ListNode<T> head;
+    private ListNode head;
     private final Set<T> predicate;
     private int size;
 
-    private class ListNode<T> {
+    private class ListNode {
         T value;
-        ListNode<T> next;
-        ListNode<T> prev;
-
-        ListNode(T value, ListNode<T> prev, ListNode<T> next) {
-            this.value = value;
-            this.prev = prev;
-            this.next = next;
-        }
+        ListNode next;
+        ListNode prev;
 
         ListNode(T value) {
             this.value = value;
@@ -30,7 +24,7 @@ public class FilterList<T> implements Iterable<T> {
 
     public FilterList(Collection<T> elements, Collection<T> predicate) {
         for (T element : elements) {
-            addListNode(new ListNode<>(element));
+            addListNode(new ListNode(element));
         }
 
         this.predicate = new HashSet<>(predicate);
@@ -41,7 +35,7 @@ public class FilterList<T> implements Iterable<T> {
         this(Arrays.asList(elements), Arrays.asList(predicate));
     }
 
-    private void addListNode(ListNode<T> node) {
+    private void addListNode(ListNode node) {
         if (head == null) {
             head = node;
             head.next = head;
@@ -74,7 +68,7 @@ public class FilterList<T> implements Iterable<T> {
 
     public boolean add(T elem) {
         if (!isElementInPredicate(elem)) {
-            addListNode(new ListNode<>(elem));
+            addListNode(new ListNode(elem));
             return true;
         }
         return false;
@@ -85,7 +79,7 @@ public class FilterList<T> implements Iterable<T> {
     }
 
     private class FilterIterator implements Iterator<T> {
-        ListNode<T> curElement = head;
+        ListNode curElement = head;
         int currentIndex;
 
         @Override
@@ -111,7 +105,7 @@ public class FilterList<T> implements Iterable<T> {
         @Override
         public void remove() {
             if (hasNext()) {
-                if(curElement == head) head = curElement.next;
+                if (curElement == head) head = curElement.next;
                 curElement.prev.next = curElement.next;
                 curElement.next.prev = curElement.prev;
                 curElement = curElement.next;
