@@ -43,6 +43,7 @@ public class FilterList<T> implements Iterable<T> {
         }
         node.prev = head.prev;
         node.next = head;
+        //new ListNode(value, head.prev, head);
         head.prev.next = node;
         head.prev = node;
         size++;
@@ -72,6 +73,37 @@ public class FilterList<T> implements Iterable<T> {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Map returns new FilterList of R type. Map also changes predicate.
+     * @param f function that transform T to R
+     * @param <R> return type
+     * @return new Filter List
+     */
+    public <R> FilterList<R> map(FunctionInterface<T, R> f) {
+        Set<R> newPredicate = new HashSet<>();
+        for (T predicateElement : predicate) {
+            newPredicate.add(f.function(predicateElement));
+        }
+        FilterList<R> newList = new FilterList<>(Collections.<R>emptyList(), newPredicate);
+        for (T element : this) {
+            newList.add(f.function(element));
+        }
+        return newList;
+    }
+
+    public T reduce(BiFunctionInterface<T> bf) {
+        T result = null;
+        Iterator<T> iter = this.iterator();
+        if (iter.hasNext()) {
+            result = iter.next();
+            while (iter.hasNext()) {
+                T current = iter.next();
+                result = bf.biFunction(result, current);
+            }
+        }
+        return result;
     }
 
     public Iterator<T> iterator() {
