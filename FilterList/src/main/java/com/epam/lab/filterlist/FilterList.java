@@ -27,7 +27,6 @@ public class FilterList implements Iterable<Integer> {
 
     /**
      * Method returns size of list which doesn't include elements from predicate
-     *
      * @return size without predicate elements
      */
     public int getSizeWithoutPredicateElems() {
@@ -56,11 +55,12 @@ public class FilterList implements Iterable<Integer> {
     }
 
     private class FilterIterator implements Iterator<Integer> {
-        int currentIndex = -1;
+        int currentIndex;
+        int lastReturnedIndex;
 
         @Override
         public boolean hasNext() {
-            int i = currentIndex + 1;
+            int i = currentIndex;
             while (i < size && isElementInPredicate(list[i]))
                 i++;
             return i < size;
@@ -68,13 +68,13 @@ public class FilterList implements Iterable<Integer> {
 
         @Override
         public Integer next() {
-            int i = currentIndex + 1;
-            while (hasNext() && isElementInPredicate(list[i])) {
-                i++;
+            while (hasNext() && isElementInPredicate(list[currentIndex])) {
+                currentIndex++;
             }
-            if (i < size) {
-                currentIndex = i;
-                return list[currentIndex];
+            if (currentIndex < size) {
+                lastReturnedIndex = currentIndex;
+                currentIndex++;
+                return list[lastReturnedIndex];
             }
             throw new NoSuchElementException();
         }
@@ -83,10 +83,10 @@ public class FilterList implements Iterable<Integer> {
         public void remove() {
             if (size > 0) {
                 size--;
-                for (int i = currentIndex; i < size; i++) {
+                for (int i = lastReturnedIndex; i < size; i++) {
                     list[i] = list[i + 1];
                 }
-                currentIndex--;
+                currentIndex = lastReturnedIndex;
             } else {
                 throw new IllegalStateException();
             }
