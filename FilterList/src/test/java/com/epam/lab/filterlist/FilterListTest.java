@@ -36,8 +36,9 @@ public class FilterListTest {
     @Test
     public void testFilterListRemove() {
         FilterList list = new FilterList(new int[]{1, 5, 9, 3, 12}, new int[]{5, 9, 4});
-        Iterator iter = list.iterator();
+        Iterator<Integer> iter = list.iterator();
         if (iter.hasNext()) {
+            int currentElement = iter.next();
             iter.remove();
         }
         int[] expectedList = new int[]{3, 12};
@@ -64,8 +65,9 @@ public class FilterListTest {
     @Test
     public void testFilterListFullRemove() {
         FilterList list = new FilterList(new int[]{1, 5, 9, 2, 3, 4}, new int[]{5, 9, 4});
-        Iterator iter = list.iterator();
+        Iterator<Integer> iter = list.iterator();
         while (iter.hasNext()) {
+            int currentElement = iter.next();
             iter.remove();
         }
         int expectedCount = 0;
