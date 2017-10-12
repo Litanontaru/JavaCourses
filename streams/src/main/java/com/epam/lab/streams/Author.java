@@ -1,18 +1,12 @@
 package com.epam.lab.streams;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
 
 /**
  * Created by Kate on 09.10.2017.
  */
 public class Author {
+    private static final int DEFAULT_AGE = 0;
     private String name;
     private LocalDate birthday;
     private LocalDate dayOfDeath;
@@ -62,6 +56,8 @@ public class Author {
     }
 
     public int getCurrentAge() {
+        if (birthday == null)
+            return DEFAULT_AGE;
         LocalDate latestDate = (this.dayOfDeath != null) ? dayOfDeath : LocalDate.now();
         int age = latestDate.getYear() - birthday.getYear();
         if (latestDate.getDayOfYear() > birthday.getDayOfYear()) {
@@ -86,7 +82,7 @@ public class Author {
         Author author = (Author) o;
 
         if (!name.equals(author.name)) return false;
-        if (!birthday.equals(author.birthday)) return false;
+        if (birthday != null ? !birthday.equals(author.birthday) : author.birthday != null) return false;
         if (dayOfDeath != null ? !dayOfDeath.equals(author.dayOfDeath) : author.dayOfDeath != null) return false;
         return gender == author.gender;
     }
@@ -94,9 +90,10 @@ public class Author {
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + birthday.hashCode();
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (dayOfDeath != null ? dayOfDeath.hashCode() : 0);
         result = 31 * result + gender.hashCode();
         return result;
     }
+
 }
