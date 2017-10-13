@@ -9,12 +9,14 @@ import java.util.*;
  * Created by Kate on 13.10.2017.
  */
 public class CacheInitializer {
+    public static final int MAX_CACHE_KEY = 20;
     private static final Class CACHE_ANNOTATION = CacheDeclaration.class;
     private Map<String, Cache> caches;
 
     public CacheInitializer(String packageName) {
         caches = new HashMap<>();
         findCacheClasses(packageName);
+        initializeCacheInstances();
     }
 
     private void findCacheClasses(String packageName) {
@@ -32,12 +34,14 @@ public class CacheInitializer {
     }
 
     private void initializeCacheInstances() {
-        final int MAX_CACHE_KEY = 20;
         Random random = new Random();
 
-        for (Cache cache : caches.values()) {
+        for (Map.Entry<String, Cache> entry : caches.entrySet()) {
             for (int i = 0; i < MAX_CACHE_KEY; i++) {
-                cache.put(i, "Timestamp - " + Calendar.getInstance().getTimeInMillis());
+                entry.getValue().put(i, "Timestamp - "
+                        + Calendar.getInstance().getTimeInMillis()
+                        + ". String from " + entry.getKey() + " "
+                        + random.nextInt());
             }
         }
     }

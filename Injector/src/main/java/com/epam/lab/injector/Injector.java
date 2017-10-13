@@ -5,19 +5,31 @@ import com.epam.lab.injector.cache.CacheInitializer;
 import com.epam.lab.injector.cache.annotations.InjectCache;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Kate on 12.10.2017.
  */
 public class Injector {
+    private CacheInitializer cacheHolder;
 
-    public static void inject(Object target, CacheInitializer cacheHolder) {
-        Set<Field> fieldSet = new HashSet<>();
-        fieldSet.addAll(Arrays.asList(target.getClass().getDeclaredFields()));
-        for (Field f : target.getClass().getDeclaredFields()) {
+    public Injector(CacheInitializer cacheHolder) {
+        this.cacheHolder = cacheHolder;
+    }
+
+    public void inject(Object target) {
+        injectHierarchy(target, target.getClass());
+    }
+
+    private void injectHierarchy(Object target, Class targetClass) {
+        initializeFields(target, targetClass.getDeclaredFields());
+        initializeFields(target, targetClass.getFields());
+        if (targetClass.getSuperclass() != Object.class) {
+            injectHierarchy(target, targetClass.getSuperclass());
+        }
+    }
+
+    private void initializeFields(Object target, Field[] fields) {
+        for (Field f : fields) {
             if (f.isAnnotationPresent(InjectCache.class)) {
                 InjectCache annotation = f.getAnnotation(InjectCache.class);
                 String cacheName = annotation.name();

@@ -10,15 +10,15 @@ import java.util.TreeMap;
  */
 @CacheDeclaration(name = "TREE_CACHE")
 public class TreeCache implements Cache {
-    private Map<Integer, String> databaseCache = new TreeMap<>();
+    private Map<Integer, String> treeCache = new TreeMap<>();
 
     @Override
     public void put(Integer key, String data) {
-        databaseCache.put(key, data);
+        treeCache.put(key, data);
     }
 
     @Override
     public String get(Integer key) {
-        return databaseCache.get(key);
+        return treeCache.get(key);
     }
 }

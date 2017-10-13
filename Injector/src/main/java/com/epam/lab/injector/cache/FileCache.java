@@ -24,9 +24,10 @@ public class FileCache implements Cache {
 
     @Override
     public void put(Integer key, String data) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(cacheFile))) {
-            writer.write(key + KEY_VALUE_DELIMITER + data);
-            writer.newLine();
+        try (FileWriter fw = new FileWriter(cacheFile, true);
+             BufferedWriter writer = new BufferedWriter(fw);
+             PrintWriter in = new PrintWriter(writer)) {
+            in.println(key + KEY_VALUE_DELIMITER + data);
         } catch (IOException e) {
             throw new CacheException("Can't write data to cache", e);
         }
@@ -34,11 +35,12 @@ public class FileCache implements Cache {
 
     @Override
     public String get(Integer key) {
+        String keyString = String.valueOf(key);
         try (BufferedReader reader = new BufferedReader(new FileReader(cacheFile))) {
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
                 String[] keyValue = currentLine.split(KEY_VALUE_DELIMITER, LIMIT_FOR_SPLIT);
-                if (keyValue.length == LIMIT_FOR_SPLIT && keyValue[0].equals(key)) {
+                if (keyValue.length == LIMIT_FOR_SPLIT && keyValue[0].equals(keyString)) {
                     return keyValue[1];
                 }
             }
