@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by Kate on 09.10.2017.
  */
 @CacheDeclaration(name = "MAP_CACHE")
-public class MapCache implements Cache<Integer, String> {
+public class MapCache implements Cache {
     private Map<Integer, String> cache = new HashMap<Integer, String>();
 
     @Override

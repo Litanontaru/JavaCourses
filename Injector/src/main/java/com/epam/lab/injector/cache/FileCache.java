@@ -8,7 +8,7 @@ import java.io.*;
  * Created by Kate on 09.10.2017.
  */
 @CacheDeclaration(name = "FILE_CACHE")
-public class FileCache implements Cache<Integer, String> {
+public class FileCache implements Cache {
     private static final String KEY_VALUE_DELIMITER = "=";
     private static final int LIMIT_FOR_SPLIT = 2;
 
