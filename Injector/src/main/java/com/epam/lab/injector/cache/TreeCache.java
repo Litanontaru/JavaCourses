@@ -8,8 +8,8 @@ import java.util.TreeMap;
 /**
  * Created by Kate on 09.10.2017.
  */
-@CacheDeclaration(name = "DB_CACHE")
-public class DatabaseCache implements Cache<Integer, String> {
+@CacheDeclaration(name = "TREE_CACHE")
+public class TreeCache implements Cache {
     private Map<Integer, String> databaseCache = new TreeMap<>();
 
     @Override
