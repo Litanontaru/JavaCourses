@@ -1,4 +1,6 @@
-package com.epam.lab.bank;
+package com.epam.lab.bank.synch;
+
+import com.epam.lab.bank.Bank;
 
 public class BankUser implements Runnable {
     private static final int AMOUNT_TO_GET = 10;

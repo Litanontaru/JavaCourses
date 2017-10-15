@@ -1,9 +1,11 @@
-package com.epam.lab.bank;
+package com.epam.lab.bank.synch;
+
+import com.epam.lab.bank.Bank;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class MainSynchronized {
 
     public static void main(String[] args) {
         final int bankAmount = 1000000000;
