@@ -1,4 +1,6 @@
-package com.epam.lab.philosophers.synch;
+package com.epam.lab.philosophers.concurrent;
+
+import java.util.Calendar;
 
 /**
  * Created by Kate on 16.10.2017.
@@ -36,33 +38,21 @@ public class Philosopher implements Runnable {
         try {
             Thread.sleep(TIMEOUT);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Error - " + e.getMessage());
         }
     }
 
     private void occupyFork(Fork fork) {
-        synchronized (fork) {
-            while (fork.isOccupied()) {
+        long currentMillis = Calendar.getInstance().getTimeInMillis();
+        while (!fork.tryOccupy()) {
+            if ((Calendar.getInstance().getTimeInMillis() - currentMillis) > TIMEOUT) {
                 System.out.println("Philosopher (" + this.id + ") is thinking");
-                try {
-                    fork.wait(TIMEOUT);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    greaterForkId.release();
-                    smallerForkId.release();
-                }
+                currentMillis = Calendar.getInstance().getTimeInMillis();
             }
-            fork.occupy(this.id);
         }
     }
 
     private void releaseFork(Fork fork) {
-        synchronized (fork) {
-            while (fork.isOccupied()) {
-                fork.release();
-                fork.notifyAll();
-            }
-        }
+        fork.release();
     }
 }
