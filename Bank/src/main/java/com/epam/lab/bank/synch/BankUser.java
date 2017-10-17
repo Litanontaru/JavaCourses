@@ -13,10 +13,10 @@ public class BankUser implements Runnable {
     public void run() {
         boolean canContinue = true;
         while (canContinue) {
-            synchronized (bank){
+            synchronized (bank) {
                 if (this.bank.hasMoney(AMOUNT_TO_GET)) {
                     this.bank.getMoney(AMOUNT_TO_GET);
-                } else{
+                } else {
                     canContinue = false;
                 }
             }

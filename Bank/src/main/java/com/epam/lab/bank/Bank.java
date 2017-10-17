@@ -16,6 +16,5 @@ public class Bank {
         if (this.moneyAmount < 0) {
             throw new IllegalStateException("Not enough money in bank [" + this.moneyAmount + "$]");
         }
-        //System.out.println("Remain " + this.moneyAmount + "$");
     }
 }

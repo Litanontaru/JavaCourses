@@ -19,14 +19,12 @@ public class BankUser implements Runnable {
         while (canContinue) {
             lock.lock();
             try {
-                //System.out.println(Thread.currentThread() + " get lock");
                 if (this.bank.hasMoney(AMOUNT_TO_GET)) {
                     this.bank.getMoney(AMOUNT_TO_GET);
                 } else {
                     canContinue = false;
                 }
             } finally {
-                //System.out.println("Thread-" + Thread.currentThread() + " realize lock. Can continue? " + canContinue);
                 lock.unlock();
             }
         }

@@ -16,8 +16,8 @@ public class MainConcurrent {
         final int countOfBankUsers = 4;
         Lock lock = new ReentrantLock();
         ExecutorService service = Executors.newFixedThreadPool(countOfBankUsers);
-        for(int i =0 ;i<countOfBankUsers; i++){
-            service.submit(new BankUser(bank,lock));
+        for (int i = 0; i < countOfBankUsers; i++) {
+            service.submit(new BankUser(bank, lock));
         }
         service.shutdown();
     }
