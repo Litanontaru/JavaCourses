@@ -15,5 +15,6 @@
         <module>injector</module>
         <module>streams</module>
         <module>philosophers</module>
+        <module>patterns</module>
     </modules>
 </project>
