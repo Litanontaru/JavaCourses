@@ -1,12 +1,13 @@
-package com.epam.lab.patterns;
+package com.epam.lab.patterns.vertices;
+
 
 /**
  * Created by Kate on 22.10.2017.
  */
-public class Leaf implements Vertex {
+public abstract class HasValueVertex implements Vertex {
     private int value;
 
-    public Leaf(int value) {
+    protected HasValueVertex(int value) {
         this.value = value;
     }
 
@@ -16,10 +17,5 @@ public class Leaf implements Vertex {
 
     public void setValue(int value) {
         this.value = value;
-    }
-
-    @Override
-    public void print() {
-        System.out.println("Leaf, value " + this.value);
     }
 }
