@@ -1,4 +1,4 @@
-package com.epam.lab.streams;
+package com.epam.lab.model;
 
 import java.time.LocalDate;
 import java.time.Period;

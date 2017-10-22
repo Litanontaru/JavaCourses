@@ -1,8 +1,7 @@
-package com.epam.lab.streams;
+package com.epam.lab.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -1,5 +1,8 @@
 package com.epam.lab.streams;
 
+import com.epam.lab.model.Author;
+import com.epam.lab.model.Book;
+import com.epam.lab.model.Gender;
 import javafx.util.Pair;
 
 import java.time.LocalDate;
