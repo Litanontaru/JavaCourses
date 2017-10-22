@@ -14,14 +14,10 @@ public class Book {
     private List<Author> authors;
 
     public Book(String title, int year, Author... authors) {
-        this(title, year, Arrays.asList(authors));
-    }
-
-    public Book(String title, int year, Collection<Author> authors) {
         this.title = title;
         this.year = year;
         this.authors = new ArrayList<>();
-        this.authors.addAll(authors);
+        this.authors.addAll( Arrays.asList(authors));
     }
 
     public String getTitle() {
@@ -51,10 +47,10 @@ public class Book {
 
     @Override
     public String toString() {
-        final String LINE_DELIMITER = "\n";
-        StringBuilder info = new StringBuilder(this.title + ", " + this.year + LINE_DELIMITER);
+        final String lineDelimiter = "\n";
+        StringBuilder info = new StringBuilder(this.title + ", " + this.year + lineDelimiter);
         for (Author author : authors) {
-            info.append(author.toString()).append(LINE_DELIMITER);
+            info.append(author.toString()).append(lineDelimiter);
         }
         return info.toString();
     }

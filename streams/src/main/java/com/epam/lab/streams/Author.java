@@ -1,6 +1,7 @@
 package com.epam.lab.streams;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * Created by Kate on 09.10.2017.
@@ -13,10 +14,12 @@ public class Author {
     private Gender gender;
 
     public Author(String name, LocalDate birthday, LocalDate dayOfDeath, Gender gender) {
+        if (birthday == null)
+            throw new IllegalArgumentException("Author's birthday can't be null");
         this.name = name;
-        this.birthday = birthday;
         this.dayOfDeath = dayOfDeath;
         this.gender = gender;
+        this.birthday = birthday;
     }
 
     public Author(String name, LocalDate birthday, Gender gender) {
@@ -33,10 +36,6 @@ public class Author {
 
     public LocalDate getBirthday() {
         return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
     }
 
     public LocalDate getDayOfDeath() {
@@ -56,14 +55,8 @@ public class Author {
     }
 
     public int getCurrentAge() {
-        if (birthday == null)
-            return DEFAULT_AGE;
         LocalDate latestDate = (this.dayOfDeath != null) ? dayOfDeath : LocalDate.now();
-        int age = latestDate.getYear() - birthday.getYear();
-        if (latestDate.getDayOfYear() > birthday.getDayOfYear()) {
-            age--;
-        }
-        return age;
+        return Period.between(birthday, latestDate).getYears();
     }
 
     @Override
