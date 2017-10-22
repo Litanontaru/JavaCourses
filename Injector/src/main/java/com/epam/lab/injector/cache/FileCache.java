@@ -1,13 +1,14 @@
 package com.epam.lab.injector.cache;
 
 import com.epam.lab.injector.cache.annotations.CacheDeclaration;
+import com.epam.lab.injector.cache.annotations.CacheName;
 
 import java.io.*;
 
 /**
  * Created by Kate on 09.10.2017.
  */
-@CacheDeclaration(name = "FILE_CACHE")
+@CacheDeclaration(name = CacheName.FILE_CACHE)
 public class FileCache implements Cache {
     private static final String KEY_VALUE_DELIMITER = "=";
     private static final int LIMIT_FOR_SPLIT = 2;

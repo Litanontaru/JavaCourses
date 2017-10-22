@@ -1,6 +1,7 @@
 package com.epam.lab.injector.cache;
 
 import com.epam.lab.injector.cache.annotations.CacheDeclaration;
+import com.epam.lab.injector.cache.annotations.CacheName;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -8,7 +9,7 @@ import java.util.TreeMap;
 /**
  * Created by Kate on 09.10.2017.
  */
-@CacheDeclaration(name = "TREE_CACHE")
+@CacheDeclaration(name = CacheName.TREE_CACHE)
 public class TreeCache implements Cache {
     private Map<Integer, String> treeCache = new TreeMap<>();
 

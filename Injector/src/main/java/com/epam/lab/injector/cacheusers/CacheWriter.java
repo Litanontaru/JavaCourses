@@ -2,6 +2,7 @@ package com.epam.lab.injector.cacheusers;
 
 import com.epam.lab.injector.cache.Cache;
 import com.epam.lab.injector.cache.CacheInitializer;
+import com.epam.lab.injector.cache.annotations.CacheName;
 import com.epam.lab.injector.cache.annotations.InjectCache;
 
 import java.util.Random;
@@ -10,7 +11,7 @@ import java.util.Random;
  * Created by Kate on 13.10.2017.
  */
 public class CacheWriter {
-    @InjectCache(name = "MAP_CACHE")
+    @InjectCache(name = CacheName.MAP_CACHE)
     private Cache cache;
 
     public void write(String txt) {

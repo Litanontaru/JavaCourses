@@ -10,7 +10,6 @@ import java.util.*;
  */
 public class CacheInitializer {
     public static final int MAX_CACHE_KEY = 20;
-    private static final Class CACHE_ANNOTATION = CacheDeclaration.class;
     private Map<String, Cache> caches;
 
     public CacheInitializer(String packageName) {
@@ -20,17 +19,24 @@ public class CacheInitializer {
     }
 
     private void findCacheClasses(String packageName) {
-        List<Class> classes = ClassUtils.getClassesFromPackage(packageName);
+        List<Class> classes;
+        try {
+            classes = ClassUtils.getClassesFromPackage(packageName);
+        } catch (ClassNotFoundException e) {
+            throw new CacheException("Caches classes aren't found", e);
+        }
+
         for (Class c : classes) {
-            if (c.isAnnotationPresent(CACHE_ANNOTATION)) {
-                CacheDeclaration annotation = (CacheDeclaration) c.getAnnotation(CACHE_ANNOTATION);
+            if (c.isAnnotationPresent(CacheDeclaration.class)) {
+                CacheDeclaration annotation = (CacheDeclaration) c.getAnnotation(CacheDeclaration.class);
                 try {
                     caches.put(annotation.name(), (Cache) c.newInstance());
                 } catch (InstantiationException | IllegalAccessException e) {
-                    System.out.println(e.getMessage());
+                    throw new CacheException("Cache " + annotation.name() + " isn't instantiated", e);
                 }
             }
         }
+
     }
 
     private void initializeCacheInstances() {

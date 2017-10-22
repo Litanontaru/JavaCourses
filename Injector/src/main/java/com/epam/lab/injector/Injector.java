@@ -1,6 +1,7 @@
 package com.epam.lab.injector;
 
 import com.epam.lab.injector.cache.Cache;
+import com.epam.lab.injector.cache.CacheException;
 import com.epam.lab.injector.cache.CacheInitializer;
 import com.epam.lab.injector.cache.annotations.InjectCache;
 
@@ -22,7 +23,6 @@ public class Injector {
 
     private void injectHierarchy(Object target, Class targetClass) {
         initializeFields(target, targetClass.getDeclaredFields());
-        initializeFields(target, targetClass.getFields());
         if (targetClass.getSuperclass() != Object.class) {
             injectHierarchy(target, targetClass.getSuperclass());
         }
@@ -38,7 +38,7 @@ public class Injector {
                 try {
                     f.set(target, cache);
                 } catch (IllegalAccessException e) {
-                    System.out.println(e.getMessage());
+                    throw new CacheException("Can't initialize cache", e);
                 }
             }
         }

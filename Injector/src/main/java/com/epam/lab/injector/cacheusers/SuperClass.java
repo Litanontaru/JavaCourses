@@ -1,6 +1,7 @@
 package com.epam.lab.injector.cacheusers;
 
 import com.epam.lab.injector.cache.Cache;
+import com.epam.lab.injector.cache.annotations.CacheName;
 import com.epam.lab.injector.cache.annotations.InjectCache;
 
 /**
@@ -8,10 +9,10 @@ import com.epam.lab.injector.cache.annotations.InjectCache;
  */
 public class SuperClass {
 
-    @InjectCache(name="FILE_CACHE")
+    @InjectCache(name = CacheName.FILE_CACHE)
     private Cache cache;
 
-    public String getValue(int key){
+    public String getValue(int key) {
         return cache.get(key);
     }
 

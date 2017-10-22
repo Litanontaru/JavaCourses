@@ -15,7 +15,7 @@ public class ClassUtils {
     private static final char DIRECTORY_DELIMITER = '/';
     private static final String CLASS_FILE_EXTENSION = ".class";
 
-    public static List<Class> getClassesFromPackage(String packageName) {
+    public static List<Class> getClassesFromPackage(String packageName) throws ClassNotFoundException {
         List<Class> classes = new ArrayList<>();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         assert classLoader != null;
@@ -37,7 +37,7 @@ public class ClassUtils {
         return classes;
     }
 
-    private static List<Class> findClasses(File directory, String packageName) {
+    private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
         List<Class> classes = new ArrayList<>();
         if (!directory.exists()) {
             return classes;
@@ -51,7 +51,7 @@ public class ClassUtils {
                 try {
                     classes.add(Class.forName(packageName + PACKAGE_DELIMITER + className));
                 } catch (ClassNotFoundException e) {
-                    System.out.println(e.getMessage());
+                    throw new ClassNotFoundException("Cache classes aren't found in package " + packageName);
                 }
             }
         }

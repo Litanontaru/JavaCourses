@@ -1,6 +1,7 @@
 package com.epam.lab.injector.cacheusers;
 
 import com.epam.lab.injector.cache.Cache;
+import com.epam.lab.injector.cache.annotations.CacheName;
 import com.epam.lab.injector.cache.annotations.InjectCache;
 
 /**
@@ -8,7 +9,7 @@ import com.epam.lab.injector.cache.annotations.InjectCache;
  */
 public class MiddleClass extends SuperClass {
 
-    @InjectCache(name = "MAP_CACHE")
+    @InjectCache(name = CacheName.MAP_CACHE)
     private Cache cache;
 
     public String readValue(int key) {
