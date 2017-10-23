@@ -2,6 +2,7 @@ package com.epam.lab.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,10 +14,13 @@ public class Book {
     private List<Author> authors;
 
     public Book(String title, int year, Author... authors) {
+        this(title, year, Arrays.asList(authors));
+    }
+
+    public Book(String title, int year, Collection<Author> authors) {
         this.title = title;
         this.year = year;
-        this.authors = new ArrayList<>();
-        this.authors.addAll( Arrays.asList(authors));
+        this.authors = new ArrayList<>(authors);
     }
 
     public String getTitle() {
@@ -61,8 +65,7 @@ public class Book {
 
         Book book = (Book) o;
 
-        if (year != book.year) return false;
-        return title.equals(book.title);
+        return year == book.year && title.equals(book.title);
     }
 
     @Override

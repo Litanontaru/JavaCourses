@@ -7,7 +7,6 @@ import java.time.Period;
  * Created by Kate on 09.10.2017.
  */
 public class Author {
-    private static final int DEFAULT_AGE = 0;
     private String name;
     private LocalDate birthday;
     private LocalDate dayOfDeath;
@@ -61,10 +60,10 @@ public class Author {
 
     @Override
     public String toString() {
-        final String VALUE_DELIMITER = ", ";
+        final String valueDelimiter = ", ";
         return this.name
-                + VALUE_DELIMITER + this.getCurrentAge()
-                + VALUE_DELIMITER + this.gender.name();
+                + valueDelimiter + this.getCurrentAge()
+                + valueDelimiter + this.gender.name();
     }
 
     @Override

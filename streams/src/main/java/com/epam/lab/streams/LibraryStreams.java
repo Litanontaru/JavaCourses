@@ -32,7 +32,7 @@ public class LibraryStreams {
         printAuthorsAndBooks(books);
     }
 
-    private static List<Book> initializeListOfBooks() {
+    public static List<Book> initializeListOfBooks() {
         List<Author> authors = new ArrayList<>();
         List<Book> books = new ArrayList<>();
 
