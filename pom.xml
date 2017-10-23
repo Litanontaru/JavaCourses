@@ -13,7 +13,7 @@
         <module>filterlist</module>
         <module>bank</module>
         <module>injector</module>
-        <module>streams</module>
+        <module>publishing-houses</module>
         <module>philosophers</module>
         <module>patterns</module>
     </modules>
