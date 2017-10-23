@@ -25,9 +25,8 @@ public class ByteSerializer implements Serializer {
                 outSerializationStream.writeObject(serPublishingHouse);
             }
         } catch (IOException e) {
-            throw new IOException("Serialization is interrupted", e);
+            throw new IOException("Byte Serialization is interrupted", e);
         }
-
     }
 
     @Override
@@ -41,7 +40,7 @@ public class ByteSerializer implements Serializer {
             }
             return new ConverterFromSerializable().convertToPublishingHouses(serPublishingHouses);
         } catch (IOException | ClassNotFoundException e) {
-            throw new IOException("Deserialization is interrupted", e);
+            throw new IOException("Byte Deserialization is interrupted", e);
         }
     }
 }

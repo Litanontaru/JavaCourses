@@ -1,5 +1,7 @@
 package com.epam.lab.entities;
 
+import com.epam.lab.entities.visitors.Visitable;
+import com.epam.lab.entities.visitors.Visitor;
 import com.epam.lab.model.Author;
 import com.epam.lab.model.Book;
 
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * Created by Kate on 22.10.2017.
  */
-public class SerializableBook implements Serializable {
+public class SerializableBook implements Serializable, Visitable {
     public static final long serialVersionUID = 1;
     private String title;
     private int year;
@@ -43,5 +45,10 @@ public class SerializableBook implements Serializable {
 
     public Book resolveBook(List<Author> authors) {
         return new Book(this.title, this.year, authors);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

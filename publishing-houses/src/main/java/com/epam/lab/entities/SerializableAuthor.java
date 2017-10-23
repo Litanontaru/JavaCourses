@@ -1,5 +1,7 @@
 package com.epam.lab.entities;
 
+import com.epam.lab.entities.visitors.Visitable;
+import com.epam.lab.entities.visitors.Visitor;
 import com.epam.lab.model.Author;
 import com.epam.lab.model.Gender;
 
@@ -10,7 +12,7 @@ import java.util.Calendar;
 /**
  * Created by Kate on 22.10.2017.
  */
-public class SerializableAuthor implements Serializable {
+public class SerializableAuthor implements Serializable, Visitable {
     public static final long serialVersionUID = 1;
     private String name;
     private LocalDate birthday;
@@ -32,5 +34,26 @@ public class SerializableAuthor implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public LocalDate getDayOfDeath() {
+        return dayOfDeath;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
