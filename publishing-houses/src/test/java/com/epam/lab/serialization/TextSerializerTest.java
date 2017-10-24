@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,20 +35,22 @@ public class TextSerializerTest {
     @Test
     @Before
     public void testTextSerialization() throws IOException {
-        System.out.println("-------Serialization-------");
+        System.out.println("-------Text Serialization-------");
         List<PublishingHouse> publishingHouses = initializeTestData();
-        publishingHouses.forEach(System.out::println);
         TextSerializer textSerializer = new TextSerializer();
         this.fileName = Files.createTempFile("serializer_test", ".txt").toString();
+        System.out.println("-------To file = " + this.fileName);
+        publishingHouses.forEach(System.out::println);
         textSerializer.serialize(this.fileName, publishingHouses);
     }
 
-    /*
+
     @Test
     public void testTextDeserialization() throws IOException {
-        System.out.println("-------Deserialization-------");
+        System.out.println("-------Text Deserialization-------");
+        System.out.println("-------From file = " + this.fileName);
         TextSerializer textSerializer = new TextSerializer();
         Collection<PublishingHouse> publishingHouses = textSerializer.deserialize(this.fileName);
         publishingHouses.forEach(System.out::println);
-    }*/
+    }
 }

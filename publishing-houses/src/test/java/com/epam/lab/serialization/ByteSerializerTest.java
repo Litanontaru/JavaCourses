@@ -35,17 +35,19 @@ public class ByteSerializerTest {
     @Test
     @Before
     public void testByteSerialization() throws IOException {
-        System.out.println("-------Serialization-------");
+        System.out.println("-------Byte Serialization-------");
         List<PublishingHouse> publishingHouses = initializeTestData();
-        publishingHouses.forEach(System.out::println);
         ByteSerializer byteSerializer = new ByteSerializer();
         this.fileName = Files.createTempFile("serializer_test", ".ser").toString();
+        System.out.println("-------To file = " + this.fileName);
+        publishingHouses.forEach(System.out::println);
         byteSerializer.serialize(this.fileName, publishingHouses);
     }
 
     @Test
     public void testByteDeserialization() throws IOException {
-        System.out.println("-------Deserialization-------");
+        System.out.println("-------Byte Deserialization-------");
+        System.out.println("-------From file = " + this.fileName);
         ByteSerializer byteSerializer = new ByteSerializer();
         Collection<PublishingHouse> publishingHouses = byteSerializer.deserialize(this.fileName);
         publishingHouses.forEach(System.out::println);

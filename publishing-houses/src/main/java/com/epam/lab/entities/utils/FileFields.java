@@ -1,4 +1,4 @@
-package com.epam.lab.entities.visitors.utils;
+package com.epam.lab.entities.utils;
 
 /**
  * Created by Kate on 24.10.2017.
@@ -13,4 +13,7 @@ public interface FileFields {
     String GENDER_FIELD = "gender";
     String LIST_AUTHORS_FIELD = "authors";
     String LIST_BOOKS_FIELD = "books";
+    String PUBLISHING_HOUSE_ENTITY = "Publishing House";
+    String AUTHOR_ENTITY = "Author";
+    String BOOK_ENTITY = "Book";
 }

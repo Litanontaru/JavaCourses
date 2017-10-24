@@ -6,8 +6,8 @@ import com.epam.lab.entities.SerializablePublishingHouse;
 
 import java.util.Collection;
 
-import static com.epam.lab.entities.visitors.utils.FileDelimiters.*;
-import static com.epam.lab.entities.visitors.utils.FileFields.*;
+import static com.epam.lab.entities.utils.FileDelimiters.*;
+import static com.epam.lab.entities.utils.FileFields.*;
 
 /**
  * Created by Kate on 24.10.2017.
@@ -19,11 +19,11 @@ public class StringExportVisitor implements Visitor {
         exportString = new StringBuilder();
         exportString.append(AREA_DELIMITER).append(LINE_DELIMITER);
         for (Visitable object : objectsToExport) {
-            exportString.append(ENTITY_DELIMITER).append(LINE_DELIMITER);
+            exportString.append(ENTITY_DELIMITER);
             object.accept(this);
+            exportString.append(ENTITY_DELIMITER).append(LINE_DELIMITER);
         }
-        exportString.append(ENTITY_DELIMITER).append(LINE_DELIMITER);
-        exportString.append(AREA_DELIMITER).append(LINE_DELIMITER);
+        exportString.append(AREA_DELIMITER);
         String stringToExport = exportString.toString();
         exportString = null;
         return stringToExport;
@@ -31,6 +31,7 @@ public class StringExportVisitor implements Visitor {
 
     @Override
     public void visit(SerializableAuthor author) {
+        exportString.append(AUTHOR_ENTITY).append(LINE_DELIMITER);
         exportString.append(ID_FIELD).append(KEY_VALUE_DELIMITER).append(author.getId()).append(LINE_DELIMITER);
         exportString.append(NAME_FIELD).append(KEY_VALUE_DELIMITER).append(author.getName()).append(LINE_DELIMITER);
         exportString.append(BIRTHDAY_FIELD).append(KEY_VALUE_DELIMITER).append(author.getBirthday()).append(LINE_DELIMITER);
@@ -42,6 +43,7 @@ public class StringExportVisitor implements Visitor {
 
     @Override
     public void visit(SerializableBook book) {
+        exportString.append(BOOK_ENTITY).append(LINE_DELIMITER);
         exportString.append(ID_FIELD).append(KEY_VALUE_DELIMITER).append(book.getId()).append(LINE_DELIMITER);
         exportString.append(TITLE_FIELD).append(KEY_VALUE_DELIMITER).append(book.getTitle()).append(LINE_DELIMITER);
         exportString.append(YEAR_FIELD).append(KEY_VALUE_DELIMITER).append(book.getYear()).append(LINE_DELIMITER);
@@ -55,6 +57,7 @@ public class StringExportVisitor implements Visitor {
 
     @Override
     public void visit(SerializablePublishingHouse publishingHouse) {
+        exportString.append(PUBLISHING_HOUSE_ENTITY).append(LINE_DELIMITER);
         exportString.append(ID_FIELD).append(KEY_VALUE_DELIMITER).append(publishingHouse.getId()).append(LINE_DELIMITER);
         exportString.append(NAME_FIELD).append(KEY_VALUE_DELIMITER).append(publishingHouse.getName()).append(LINE_DELIMITER);
         exportString.append(LIST_BOOKS_FIELD).append(KEY_VALUE_DELIMITER).append(LIST_ENTITIES_START);
