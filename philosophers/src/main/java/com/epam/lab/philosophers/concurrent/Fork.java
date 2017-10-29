@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
  * Created by Kate on 16.10.2017.
  */
 public class Fork {
-
+    //оба поля могут быть final
     private int id;
     private Lock lock;
 

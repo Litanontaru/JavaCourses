@@ -27,6 +27,9 @@ public class Philosopher implements Runnable {
 
             eating();
 
+            //Существует строгая практика делать unlock в секции finally,
+            //иначе при выпадении Error или Exception lock не будет отпушени
+            //и система войдёт в неконсистентное состояние
             releaseFork(smallerForkId);
             releaseFork(greaterForkId);
         }

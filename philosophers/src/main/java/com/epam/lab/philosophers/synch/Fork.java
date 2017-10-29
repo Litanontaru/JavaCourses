@@ -5,7 +5,7 @@ package com.epam.lab.philosophers.synch;
  */
 public class Fork {
     private static final int FORK_IS_NOT_OCCUPIED = -1;
-
+    //поле может быть final
     private int id;
     private volatile int ownerId = FORK_IS_NOT_OCCUPIED;
 

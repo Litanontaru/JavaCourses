@@ -6,6 +6,7 @@ import java.util.concurrent.locks.Lock;
 
 public class BankUser implements Runnable {
     private static final int AMOUNT_TO_GET = 10;
+    //оба поля могут быть final
     private Bank bank;
     private Lock lock;
 
@@ -19,9 +20,11 @@ public class BankUser implements Runnable {
         while (canContinue) {
             lock.lock();
             try {
+                //лишнее указание this
                 if (this.bank.hasMoney(AMOUNT_TO_GET)) {
                     this.bank.getMoney(AMOUNT_TO_GET);
                 } else {
+                    //тут проще break сделать
                     canContinue = false;
                 }
             } finally {
